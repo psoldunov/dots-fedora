@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Use jq to parse the output of hyprctl and get monitor names
+MONITORS=$(hyprctl monitors -j | jq -r '.[].name')
+
+# Iterate over each monitor and apply the operations
+for o in $MONITORS
+do
+	sleep 1
+	grim -o "$o" "/tmp/$o.png"
+	if [ -f "/tmp/$o.png" ]; then
+		convert "/tmp/$o.png" -blur 0x8 "/tmp/$o.png" &
+	fi
+done
+wait
+swaylock -f -F -c 000000 -i "/tmp/$o.png" --font "JetBrainsMono NF"
+exit 0

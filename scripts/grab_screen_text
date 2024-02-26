@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#check if slurp is running and quit if is
+if pgrep -x "slurp" > /dev/null
+then
+    echo "slurp is already running"
+    exit 1
+fi
+
+grim -g "$(slurp)" - | tesseract - - -l eng | wl-copy
+# grim -g "$(slurp)" - | tesseract - - -l rus+eng | wl-copy
+
+# play a sound if grim wasn't closed
+if [ $? -eq 0 ]
+then
+    paplay /usr/share/sounds/freedesktop/stereo/screen-capture.oga
+fi

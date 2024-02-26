@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Define path to static wallpaper
+STATIC_WALLPAPER=$1
+
+# Check if swww is running
+if pgrep -x "swww-daemon" > /dev/null
+then
+    echo "swww is running. Stopping it now..."
+    swww kill
+fi
+
+# Initialize swww
+swww init
+
+# Set static wallpaper
+swww img "$STATIC_WALLPAPER"
+
+# Add blur effect to lock screen
+convert "$STATIC_WALLPAPER" -blur 0x10 "/usr/share/backgrounds/user/lock_background.png"
+exit 0

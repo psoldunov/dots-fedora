@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# function to get all windows in JSON format
+function get_windows_json() {
+    hyprctl clients -j
+}
+
+# get spotify window address
+spotify_address=$(get_windows_json | jq -r '.[] | select(.class == "Spotify") | .address')
+
+# Check if an address was found
+if [ -n "$spotify_address" ]; then
+    # Execute the command to focus the Spotify window
+    hyprctl dispatch focuswindow address:"$spotify_address"
+else
+    echo "Spotify window not found."
+    flatpak run com.spotify.Client & disown
+
+    # Wait for the window to appear
+    while [ -z "$spotify_address" ]; do
+        sleep 0.1
+        spotify_address=$(get_windows_json | jq -r '.[] | select(.class == "Spotify") | .address')
+    done
+
+    # Focus the window
+    hyprctl dispatch focuswindow address:"$spotify_address"
+fi

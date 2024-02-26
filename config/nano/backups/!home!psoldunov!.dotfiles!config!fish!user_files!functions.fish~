@@ -1,0 +1,39 @@
+# Create a directory and cd into it
+function mkcd 
+  mkdir -p "$argv" && cd "$argv"
+end
+
+# function switchDesktopMode
+#   set popShellStateDirty (gnome-extensions info pop-shell@system76.com | sed -n 's/State:\s*\(\S*\).*/\1/p')
+#   set tilingStateDirty (gnome-extensions info tiling-assistant@leleat-on-github | sed -n 's/State:\s*\(\S*\).*/\1/p')
+
+#   set popShellState (string trim $popShellStateDirty)
+#   set tilingState (string trim $tilingStateDirty)
+
+#   if test $popShellState = "ENABLED"
+#     gnome-extensions disable pop-shell@system76.com
+#     gnome-extensions enable tiling-assistant@leleat-on-github
+#   end
+
+#   if test $tilingState = "ENABLED"
+#     gnome-extensions disable tiling-assistant@leleat-on-github
+#     gnome-extensions enable pop-shell@system76.com
+#   end
+# end
+
+# function restartPicom
+#   killall picom
+#   picom --config ~/.config/picom/picom.conf -b --backend glx
+# end
+
+# function startPicom
+#   picom --config ~/.config/picom/picom.conf -b --backend glx
+# end
+
+# function fish_user_key_bindings
+#     bind \e\[1\;5C "commandline | xclip -selection clipboard"
+#     bind \e\[1\;5D "commandline (xclip -selection clipboard -o)"
+# end
+
+
+

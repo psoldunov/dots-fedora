@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Check if swaylock is running
+if pgrep -x "swaylock" > /dev/null
+then
+    exit 0
+fi
+
+swaylock -f -e -F -c 000000 -i /usr/share/backgrounds/user/lock_background.png --font "JetBrainsMono Nerd Font" --indicator-radius 60 --caps-lock-key-hl-color 33445566 --font-size 16

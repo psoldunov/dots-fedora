@@ -1,0 +1,125 @@
+#!/usr/bin/env bash
+
+echo ""
+echo "======================="
+echo "Checking for updates..."
+echo "======================="
+
+# Function to check for DNF updates
+check_dnf_updates() {
+    updates=$(dnf check-update --quiet)
+    case $? in
+        100)
+            echo ""
+            echo "DNF has updates available."
+            return 0
+            ;;
+        0)
+            echo ""
+            echo "DNF is up to date."
+            return 1
+            ;;
+        *)
+            echo ""
+            echo "Error checking DNF updates."
+            return 1
+            ;;
+    esac
+}
+
+# Function to check for Flatpak updates
+check_flatpak_updates() {
+    updates=$(flatpak remote-ls --updates)
+    if [ "$(echo "$updates" | wc -l)" -gt 0 ]; then
+        echo ""
+        echo "Flatpak has updates available."
+        return 0
+    else
+        echo ""
+        echo "Flatpak is up to date."
+        return 1
+    fi
+}
+
+# Function to check for Homebrew updates
+check_homebrew_updates() {
+    if ! command -v brew &> /dev/null; then
+        echo ""
+        echo "Homebrew is not installed."
+        return 1
+    fi
+    brew update
+    updates=$(brew outdated)
+    if [ "$(echo "$updates" | wc -l)" -gt 0 ]; then
+        echo ""
+        echo "Homebrew has updates available."
+        return 0
+    else
+        echo ""
+        echo "Homebrew is up to date."
+        return 1
+    fi
+}
+
+# Check for DNF updates
+check_dnf_updates
+dnf_updates_available=$?
+
+# Check for Flatpak updates
+check_flatpak_updates
+flatpak_updates_available=$?
+
+# Check for Homebrew updates
+check_homebrew_updates
+homebrew_updates_available=$?
+
+# Prompt user to update if updates are available
+if [ $dnf_updates_available -eq 0 ] || [ $flatpak_updates_available -eq 0 ] || [ $homebrew_updates_available -eq 0 ]; then
+    echo ""
+    read -r -p "Do you want to update? (y/N): " response
+    case $response in
+        [Yy]*)
+            if [ $dnf_updates_available -eq 0 ]; then
+                echo ""
+                echo "Updating DNF..."
+                sudo dnf check-update --refresh --quiet
+                sudo dnf upgrade -y --quiet
+                echo ""
+                echo "======================"
+                echo "DNF updates installed."
+                echo "======================"
+            fi
+            if [ $flatpak_updates_available -eq 0 ]; then
+                echo ""
+                echo "Updating Flatpak..."
+                flatpak update -y --noninteractive
+                echo ""
+                echo "=========================="
+                echo "Flatpak updates installed."
+                echo "=========================="
+            fi
+            if [ $homebrew_updates_available -eq 0 ]; then
+                echo ""
+                echo "Updating Homebrew..."
+                brew upgrade
+                brew unlink p11-kit &
+                echo ""
+                echo "=========================="
+                echo "Homebrew updates installed."
+                echo "=========================="
+            fi
+            ;;
+        *)
+            echo ""
+            echo "================"
+            echo "Update canceled."
+            echo "================"
+            ;;
+    esac
+fi
+
+echo ""
+echo "==============================================================="
+echo "Update process complete. This window will close in 5 seconds..."
+echo "==============================================================="
+sleep 5

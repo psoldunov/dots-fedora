@@ -1,0 +1,114 @@
+{
+	"window.titleBarStyle": "custom",
+	"editor.accessibilitySupport": "off",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.fontFamily": "SFMono Nerd Font",
+	"editor.fontSize": 16,
+	"editor.formatOnPaste": true,
+	"editor.formatOnSave": true,
+	"editor.lineNumbers": "relative",
+	"editor.formatOnType": true,
+	"editor.tabSize": 2,
+	"editor.wordWrap": "on",
+	"emmet.includeLanguages": {
+		"ejs": "html",
+		"javascript": "javascriptreact"
+	},
+	"emmet.syntaxProfiles": {
+		"html": {
+			"attr_quotes": "single"
+		},
+		"js": {
+			"attr_quotes": "single",
+			"self_closing_tag": true
+		},
+		"jsx": {
+			"attr_quotes": "single",
+			"self_closing_tag": true
+		},
+		"xml": {
+			"attr_quotes": "single"
+		}
+	},
+	"explorer.confirmDelete": false,
+	"explorer.confirmDragAndDrop": false,
+	"files.associations": {
+		"*.ejs": "html",
+		"*.php": "php",
+		"*.lua": "lua"
+	},
+	"git.autofetch": true,
+	"html.completion.attributeDefaultValue": "singlequotes",
+	"javascript.format.semicolons": "insert",
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"prettier.bracketSameLine": true,
+	"prettier.jsxSingleQuote": true,
+	"prettier.singleQuote": true,
+	"prettier.useTabs": true,
+	"terminal.external.osxExec": "Warp.app",
+	"terminal.integrated.env.osx": {
+		"FIG_NEW_SESSION": "1"
+	},
+	"vsicons.dontShowNewVersionMessage": true,
+	"workbench.startupEditor": "none",
+	"editor.inlineSuggest.enabled": true,
+	"github.copilot.enable": {
+		"*": true,
+		"yaml": true,
+		"plaintext": true,
+		"markdown": true
+	},
+	"security.workspace.trust.untrustedFiles": "open",
+	"liveServer.settings.donotShowInfoMsg": true,
+	"settingsSync.ignoredExtensions": [
+		"ms-vscode-remote.remote-wsl",
+		"dlasagno.wal-theme"
+	],
+
+	"vim.easymotion": true,
+	"vim.incsearch": true,
+	"vim.useSystemClipboard": true,
+	"vim.smartRelativeLine": true,
+	"vim.useCtrlKeys": true,
+	"vim.hlsearch": true,
+	"vim.insertModeKeyBindings": [
+		{
+			"before": ["j", "j"],
+			"after": ["<Esc>"]
+		}
+	],
+	"vim.normalModeKeyBindingsNonRecursive": [
+		{
+			"before": ["<leader>", "d"],
+			"after": ["d", "d"]
+		},
+		{
+			"before": ["<C-n>"],
+			"commands": [":nohl"]
+		},
+		{
+			"before": ["K"],
+			"commands": ["lineBreakInsert"],
+			"silent": true
+		}
+	],
+	"vim.leader": "<space>",
+	"vim.handleKeys": {
+		"<C-a>": false,
+		"<C-f>": false
+	},
+	"window.commandCenter": true,
+	"[lua]": {
+		"editor.defaultFormatter": "yinfei.luahelper"
+	},
+	"[rust]": {
+		"editor.defaultFormatter": "rust-lang.rust-analyzer"
+	},
+	"[nix]": {
+		"editor.defaultFormatter": "nix-community.vscode-nix"
+	},
+	"cmake.configureOnOpen": true,
+	"workbench.colorTheme": "Catppuccin Macchiato",
+	"workbench.iconTheme": "vscode-icons",
+	"window.zoomLevel": 1
+}

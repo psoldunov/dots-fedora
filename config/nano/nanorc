@@ -1,0 +1,30 @@
+set atblanks
+set autoindent
+set backup
+set backupdir "/home/psoldunov/.dotfiles/config/nano/backups"
+set boldtext
+set constantshow
+set cutfromcursor
+set indicator
+set linenumbers
+set minibar
+set mouse
+set showcursor
+set softwrap
+set speller "aspell -x -c"
+set trimblanks
+set whitespace "»·"
+set zap
+set multibuffer
+
+set titlecolor bold,lightwhite,blue
+set promptcolor lightwhite,lightblack
+set statuscolor bold,lightwhite,green
+set errorcolor bold,lightwhite,red
+set spotlightcolor black,lime
+set selectedcolor lightwhite,magenta
+set stripecolor ,yellow
+set scrollercolor cyan
+set numbercolor cyan
+set keycolor cyan
+set functioncolor green

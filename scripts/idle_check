@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Check for any running players using playerctl
+# and ensure they are not paused
+player_status=$(playerctl status 2>/dev/null)
+if [ "$player_status" = "Playing" ]; then
+    exit 1
+fi
+
+# Array of class prefixes to check
+class_prefixes="steam_app_"
+
+# Check for any apps with class starting with any of the specified prefixes using hyprctl
+for prefix in $class_prefixes; do
+    if hyprctl clients | grep -q $prefix; then
+        exit 1
+    fi
+done
+
+exit 0

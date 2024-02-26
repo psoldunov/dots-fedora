@@ -1,0 +1,6 @@
+#!/bin/bash
+
+grim -l 0 "$(xdg-user-dir PICTURES)/Screenshots/$(date +'screenshot_%Y-%m-%d-%H%M%S.png')"
+
+# play a sound
+paplay /usr/share/sounds/freedesktop/stereo/screen-capture.oga

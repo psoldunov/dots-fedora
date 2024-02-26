@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+# File to store the counter
+counterFile="/tmp/spotify_counter.txt"
+# File to store the last played song
+lastSongFile="/tmp/spotify_last_song.txt"
+
+# Initialize or read the counter
+if [ ! -e "$counterFile" ]; then
+    echo 0 > "$counterFile"
+fi
+counter=$(cat "$counterFile")
+
+# Get the song and play status and set upper and escape double quotes
+song=$(playerctl -p spotify metadata --format "{{ artist }} - {{ title }}" | tr '[:lower:]' '[:upper:]')
+playStatus=$(playerctl -p spotify status)
+
+# If there is no song playing, reset the counter and exit
+if [ -z "$song" ]; then
+    echo 0 > "$counterFile"
+    echo "" > "$lastSongFile"
+    exit 0
+fi
+
+# Manually escape double quotes in the song title
+song=$(echo "$song" | sed 's/"/\\"/g')
+
+# Check if a new song is played and reset the counter if true
+if [ -e "$lastSongFile" ]; then
+    lastSong=$(cat "$lastSongFile")
+    if [ "$lastSong" != "$song" ]; then
+        counter=0
+    fi
+fi
+echo "$song" > "$lastSongFile" # Update the last played song
+
+# Calculate the display string based on the counter
+displayLength=32
+separator=" | " # Separator between repetitions
+repeatingSong="$song$separator$song" # Concatenate song with separator and itself after escaping double quotes
+songLength=${#repeatingSong}
+
+if [ ${#song} -le $displayLength ]; then
+    displayString="$song"
+else
+    start=$((counter % (songLength - displayLength + 1) + 1))
+    displayString=${repeatingSong:start:displayLength}
+    
+    # Reset the counter to create an illusion of continuous scrolling, two characters sooner
+    if [ $start -ge $((songLength - displayLength - 1)) ]; then
+        counter=0
+    fi
+fi
+
+# Update the counter for the next execution
+counter=$((counter + 1))
+echo "$counter" > "$counterFile"
+
+# Output the display string with the play status
+alt=$(echo "$playStatus" | tr '[:upper:]' '[:lower:]')
+case $playStatus in
+    'Playing')
+        echo "{\"text\": \"$displayString\", \"alt\": \"$alt\", \"tooltip\": \"$song\", \"class\": \"playing\"}"
+        ;;
+    'Paused')
+        echo "{\"text\": \"$displayString\", \"alt\": \"$alt\", \"tooltip\": \"$song\", \"class\": \"paused\"}"
+        ;;
+esac

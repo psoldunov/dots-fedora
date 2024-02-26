@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+for f in *.mp4; do
+  ffmpeg -hwaccel videotoolbox -i "$f" -vf "scale=-2:540" -c:v libvpx-vp9 -b:v 1M -crf 30 -an -y "${f%.mp4}.webm"
+done

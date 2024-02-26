@@ -1,0 +1,197 @@
+{
+	// Updates Count
+	"custom/updates": {
+		"format": "  {}",
+		"tooltip-format": "{}",
+		"escape": true,
+		"return-type": "json",
+		"exec": "waybar_updates-indicator",
+		"restart-interval": 60,
+		"on-click": "kitty -e 'waybar_install-updates'",
+		"tooltip": true
+	},
+	"custom/vpn": {
+		"format": "VPN {icon}",
+		"tooltip-format": "{}",
+		"return-type": "json",
+		"exec": "waybar_vpn-status",
+		"restart": 60,
+		"signal": 1,
+		"on-click": "waybar_vpn-connect",
+		"format-icons": {
+			"connected": "󰌾",
+			"disconnected": "󰿆"
+		},
+		"tooltip": true
+	},
+	// Spotify
+	"custom/spotify": {
+		"format": "{icon} {} ",
+		"tooltip-format": "{}",
+		"exec": "waybar_spotify",
+		"escape": true,
+		"return-type": "json",
+		"interval": 1,
+		"on-click": "playerctl -p spotify play-pause",
+		"on-click-right": "waybar_focus-spotify",
+		"on-scroll-down": "playerctl -p spotify next",
+		"on-scroll-up": "playerctl -p spotify previous",
+		"format-icons": {
+			"playing": "",
+			"paused": ""
+		},
+		"tooltip": true
+	},
+	// Notifications
+	"custom/notification": {
+		"tooltip": true,
+		"format": "{icon}  {}",
+		"format-icons": {
+			"notification": "<span foreground='red'><sup></sup></span>",
+			"none": "",
+			"dnd-notification": "<span foreground='red'><sup></sup></span>",
+			"dnd-none": "",
+			"inhibited-notification": "<span foreground='red'><sup></sup></span>",
+			"inhibited-none": "",
+			"dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+			"dnd-inhibited-none": ""
+		},
+		"return-type": "json",
+		"exec-if": "which swaync-client",
+		"exec": "swaync-client -swb",
+		"on-click": "sleep 0.1; swaync-client -t -sw",
+		"on-click-right": "swaync-client -d -sw",
+		"escape": true
+	},
+	"custom/logo": {
+		"format": "   ",
+		"tooltip": false,
+		"on-click-right": "kitty -e --hold fastfetch",
+		"on-click": "sleep 0.1; rofi -show combi"
+	},
+	// Taskbar
+	"wlr/taskbar": {
+		"format": "{icon}",
+		"icon-size": 18,
+		"tooltip-format": "{title}",
+		"on-click": "activate",
+		"on-click-middle": "close",
+		"ignore-list": ["kitty", "Spotify", "xwaylandvideobridge"]
+	},
+	// Power Menu
+	"custom/exit": {
+		"format": "",
+		"on-click": "wlogout",
+		"tooltip": false
+	},
+	"keyboard-state": {
+		"numlock": false,
+		"capslock": true,
+		"format": "{name} {icon}",
+		"format-icons": {
+			"locked": "",
+			"unlocked": ""
+		}
+	},
+	// MPD
+	"mpd": {
+		"format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ",
+		"format-disconnected": "Disconnected ",
+		"format-stopped": "",
+		"unknown-tag": "N/A",
+		"interval": 2,
+		"on-click": "mpc toggle",
+		"on-click-right": "fish -c 'hyprctl dispatch focuswindow title:(mpc status | head -n 1)'",
+		"on-click-middle": "kitty -e ncmpcpp",
+		"on-scroll-down": "mpc next",
+		"on-scroll-up": "mpc prev",
+		"consume-icons": {
+			"on": " "
+		},
+		"random-icons": {
+			"off": "<span color=\"#f53c3c\"></span> ",
+			"on": " "
+		},
+		"repeat-icons": {
+			"on": " "
+		},
+		"single-icons": {
+			"on": "1 "
+		},
+		"state-icons": {
+			"paused": "",
+			"playing": ""
+		},
+		"tooltip-format": "MPD (connected)",
+		"tooltip-format-disconnected": "MPD (disconnected)"
+	},
+	"idle_inhibitor": {
+		"format": "{icon}",
+		"format-icons": {
+			"activated": "",
+			"deactivated": ""
+		}
+	},
+	"tray": {
+		// "icon-size": 14,
+		"spacing": 10
+	},
+	"cpu": {
+		"format": "{usage}% ",
+		"tooltip": false
+	},
+	"memory": {
+		"format": "{}% "
+	},
+	"temperature": {
+		// "thermal-zone": 2,
+		// "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+		"critical-threshold": 80,
+		// "format-critical": "{temperatureC}°C {icon}",
+		"format": "{temperatureC}°C {icon}",
+		"format-icons": ["", "", ""]
+	},
+	"network": {
+		// "interface": "wlp2*", // (Optional) To force the use of this interface
+		"format-wifi": "{essid} ({signalStrength}%) ",
+		"format-ethernet": "{ipaddr}/{cidr} ",
+		"tooltip-format": "{ifname} via {gwaddr} ",
+		"format-linked": "{ifname} (No IP) ",
+		"format-disconnected": "Disconnected ⚠",
+		"format-alt": "{ifname}: {ipaddr}/{cidr}"
+	},
+	"pulseaudio": {
+		// "scroll-step": 1, // %, can be a float
+		"format": "{volume}% {icon} {format_source}",
+		"format-bluetooth": "{volume}% {icon} {format_source}",
+		"format-bluetooth-muted": " {icon} {format_source}",
+		"format-muted": " {format_source}",
+		"format-source": "{volume}% ",
+		"format-source-muted": "",
+		"format-icons": {
+			"headphone": "",
+			"hands-free": "",
+			"headset": "",
+			"phone": "",
+			"portable": "",
+			"car": "",
+			"default": ["", "", ""]
+		},
+		"on-click": "pavucontrol"
+	},
+	"hyprland/language": {
+		"format": "{}",
+		"format-en": "EN",
+		"format-ru": "RU"
+	},
+	"clock": {
+		"clock": "clock1",
+		"timezone": "Europe/Tallinn"
+	},
+	"clock#clock2": {
+		"clock": "clock2",
+		"timezone": "Europe/Tallinn",
+		"format": "{:%d/%m/%Y}",
+		"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+	}
+}

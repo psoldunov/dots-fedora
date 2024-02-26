@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name=TIDAL Hi-Fi
+Exec=/opt/tidal-hifi/tidal-hifi %U
+Terminal=false
+Type=Application
+Icon=tidal-hifi
+StartupWMClass=tidal-hifi
+Encoding=UTF-8
+GenericName=TIDAL Hi-Fi
+Comment=Tidal on Electron with widevine(hifi) support
+StartupNotify=true
+Categories=AudioVideo;
+X-PulseAudio-Properties=media.role=music
+MimeType=x-scheme-handler/tidal;

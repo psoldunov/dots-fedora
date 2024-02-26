@@ -1,0 +1,16 @@
+#!/bin/bash
+
+#check if slurp is running and quit if is
+if pgrep -x "slurp" > /dev/null
+then
+    echo "slurp is already running"
+    exit 1
+fi
+
+slurp | grim -l 0 -g - "$(xdg-user-dir PICTURES)/Screenshots/$(date +'screenshot_%Y-%m-%d-%H%M%S.png')"
+
+# play a sound if grim wasn't closed
+if [ $? -eq 0 ]
+then
+    paplay /usr/share/sounds/freedesktop/stereo/screen-capture.oga
+fi

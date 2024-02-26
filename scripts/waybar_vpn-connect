@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Get the VPN status
+vpn_status=$(expressvpn status)
+
+# Check if VPN is not connected
+if echo "$vpn_status" | grep -q "Not connected"; then
+    # Connect to VPN
+    expressvpn connect >/dev/null 2>&1
+else
+    # Disconnect from VPN
+    expressvpn disconnect >/dev/null 2>&1
+fi
+
+# Send signal to waybar to update the custom module
+pkill -RTMIN+1 waybar

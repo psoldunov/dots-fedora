@@ -1,0 +1,7 @@
+# Swayidle configuration
+
+timeout 600 "if idle_check; then lock_screen; fi"
+timeout 660 "if idle_check; then hyprctl dispatch dpms off; fi" resume "hyprctl dispatch dpms on"
+timeout 3600 "if idle_check; then systemctl suspend; fi"
+before-sleep "lock_screen"
+after-resume 'hyprctl dispatch dpms on'

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Get the VPN status and redirect STDERR to STDOUT
+vpn_status=$(expressvpn status 2>&1)
+
+# Check if VPN is not connected
+if echo "$vpn_status" | grep -q "Not connected"; then
+    # Output JSON for disconnected state
+    echo '{"text": "VPN disconnected", "alt": "disconnected", "tooltip": "Not connected", "class": "disconnected", "percentage": ""}' | jq --unbuffered --compact-output
+else
+    # Extracting the 'connected to' information
+    tooltip_text=$(echo "$vpn_status" | grep -o "Connected to [^[:space:]]\+" | sed -r "s/\x1B\[[0-9;]*m//g")
+    
+    # Output JSON for connected state
+    echo '{"text": "VPN connected", "alt": "connected", "tooltip": "'"$tooltip_text"'", "class": "connected", "percentage": ""}' | jq --unbuffered --compact-output
+fi

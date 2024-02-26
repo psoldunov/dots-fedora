@@ -1,0 +1,60 @@
+#!/bin/bash
+
+set -eu
+
+##
+## This script is for updating Fedora using DNF package manager
+##
+
+info() { echo >&2 "$*"; }
+die() { info "!! $*"; exit 1; }
+
+checkmode=""
+error=""
+debug=""
+
+while [[ $# -ge 1 ]]; do
+  case "$1" in
+    "check") checkmode=1 ;;
+    "-d") debug=1 ;;
+    *)
+      error=1
+      info "Unknown option \"$1\""
+    ;;
+  esac
+  shift
+done
+
+if [[ -n $error ]]; then
+  echo >&2 "!! Usage: $0 [check]"
+  exit 1
+fi
+
+[[ -n $debug ]] && set -x
+
+# Update the system
+update_system() {
+    sudo dnf update -y
+}
+
+# Check if updates are available
+check_updates() {
+    if ! updates=$(dnf check-update); then
+        if [ -z "$updates" ]; then
+            info "Your system is up to date!"
+            exit 0
+        else
+            info "Updates are available."
+            echo "$updates"
+            exit 1
+        fi
+    fi
+}
+
+if [[ -n ${checkmode-} ]]; then
+    check_updates
+else
+    update_system
+fi
+
+exit 0

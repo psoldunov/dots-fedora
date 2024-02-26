@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Define an array of autostart commands
+autostart_commands=(
+    "flatpak run com.slack.Slack -u"
+    "flatpak run com.discordapp.Discord --start-minimized"
+    "/opt/Ferdium/ferdium --enable-features=UseOzonePlatform,WaylandWindowDecorations --ozone-platform-hint=auto"
+    "flatpak run org.telegram.desktop -startintray"
+    # "1password --ozone-platform-hint=auto --silent"
+    "1password --silent"
+    "steam -silent"
+    "deluge-gtk"
+    "dropbox start"
+)
+
+# Wait for 5 seconds
+sleep 5
+
+# Iterate over the array and execute each command
+for cmd in "${autostart_commands[@]}"; do
+    eval "$cmd &"
+done

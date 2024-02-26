@@ -1,0 +1,38 @@
+[
+	{
+		"name": "main",
+		"include": ["~/.dotfiles/config/waybar/modules.jsonc"],
+		"height": 42,
+		"layer": "top",
+		"margin-left": 4,
+		"margin-top": 4,
+		"margin-right": 4,
+		"margin-bottom": 0,
+		"spacing": 4,
+		// Choose the order of the modules
+		"modules-left": ["custom/logo", "hyprland/workspaces", "wlr/taskbar"],
+		"modules-center": ["hyprland/window"],
+		"modules-right": [
+			"mpd",
+			"custom/spotify",
+			"custom/updates",
+			"custom/vpn",
+			"idle_inhibitor",
+			"pulseaudio",
+			"network",
+			"cpu",
+			"memory",
+			"temperature",
+			"keyboard-state",
+			"hyprland/language",
+			"clock",
+			"clock#clock2",
+			"tray",
+			"custom/exit",
+			"custom/notification"
+		],
+		"hyprland/workspaces": {
+			"format": "{name}"
+		}
+	}
+]
